@@ -72,6 +72,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FTN81CIMProfile_Labs">
+      <HintPath>Lib\FTN81CIMProfile_Labs.dll</HintPath>
+    </Reference>
     <Reference Include="FTN_81CIMProfile_Labs">
       <HintPath>..\bin\DLL\FTN_81CIMProfile_Labs.dll</HintPath>
     </Reference>
@@ -115,7 +118,9 @@
   <ItemGroup>
     <Content Include="Lib\PowerTransformerCIMProfile_Labs.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

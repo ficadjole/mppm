@@ -93,215 +93,291 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Importer
 			LogManager.Log("Loading elements and creating delta...", LogLevel.Info);
 
 			//// import all concrete model types (DMSType enum)
-			ImportBaseVoltages();
-			ImportLocations();
-			ImportPowerTransformers();
-			ImportTransformerWindings();
-			ImportWindingTests();
+            ImportDCLineSegment();
+            ImportSeriesCompensator();
+            ImportPerLengthPhaseImpedance();
+			ImportPhaseImpedanceData();
+			ImportPerLengthSequenceImpedance();
+			ImportACLineSegment();
+			ImportTerminal();
 
 			LogManager.Log("Loading elements and creating delta completed.", LogLevel.Info);
 		}
 
 		#region Import
-		private void ImportBaseVoltages()
-		{
-			SortedDictionary<string, object> cimBaseVoltages = concreteModel.GetAllObjectsOfType("FTN.BaseVoltage");
-			if (cimBaseVoltages != null)
+		private void ImportPhaseImpedanceData()
+		{	
+			Console.WriteLine("Importing PhaseImpedanceData...");
+            SortedDictionary<string, object> cimPhaseImpedanceDatas = concreteModel.GetAllObjectsOfType("FTN.PhaseImpedanceData");
+			if (cimPhaseImpedanceDatas != null)
 			{
-				foreach (KeyValuePair<string, object> cimBaseVoltagePair in cimBaseVoltages)
+				foreach (KeyValuePair<string, object> cimPhaseImpedanceDataPair in cimPhaseImpedanceDatas)
 				{
-					FTN.BaseVoltage cimBaseVoltage = cimBaseVoltagePair.Value as FTN.BaseVoltage;
+					FTN.PhaseImpedanceData cimPhaseImpedanceData = cimPhaseImpedanceDataPair.Value as FTN.PhaseImpedanceData;
 
-					ResourceDescription rd = CreateBaseVoltageResourceDescription(cimBaseVoltage);
+					ResourceDescription rd = CreatePhaseImpedanceDataResourceDescription(cimPhaseImpedanceData);
 					if (rd != null)
 					{
 						delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
-						report.Report.Append("BaseVoltage ID = ").Append(cimBaseVoltage.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+						report.Report.Append("PhaseImpedanceData ID = ").Append(cimPhaseImpedanceData.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
 					}
 					else
 					{
-						report.Report.Append("BaseVoltage ID = ").Append(cimBaseVoltage.ID).AppendLine(" FAILED to be converted");
+						report.Report.Append("PhaseImpedanceData ID = ").Append(cimPhaseImpedanceData.ID).AppendLine(" FAILED to be converted");
 					}
 				}
 				report.Report.AppendLine();
 			}
 		}
 
-		private ResourceDescription CreateBaseVoltageResourceDescription(FTN.BaseVoltage cimBaseVoltage)
+		private ResourceDescription CreatePhaseImpedanceDataResourceDescription(FTN.PhaseImpedanceData cimPhaseImpedanceData)
 		{
 			ResourceDescription rd = null;
-			if (cimBaseVoltage != null)
+			if (cimPhaseImpedanceData != null)
 			{
-				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.BASEVOLTAGE, importHelper.CheckOutIndexForDMSType(DMSType.BASEVOLTAGE));
+				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.PHASEIMPDATA, importHelper.CheckOutIndexForDMSType(DMSType.PHASEIMPDATA));
 				rd = new ResourceDescription(gid);
-				importHelper.DefineIDMapping(cimBaseVoltage.ID, gid);
+				importHelper.DefineIDMapping(cimPhaseImpedanceData.ID, gid);
 
 				////populate ResourceDescription
-				PowerTransformerConverter.PopulateBaseVoltageProperties(cimBaseVoltage, rd);
+				PowerTransformerConverter.PopulateImpedanceDataProperties(cimPhaseImpedanceData, rd, importHelper, report);
 			}
 			return rd;
 		}
 		
-		private void ImportLocations()
+		private void ImportPerLengthSequenceImpedance()
 		{
-			SortedDictionary<string, object> cimLocations = concreteModel.GetAllObjectsOfType("FTN.Location");
-			if (cimLocations != null)
+			SortedDictionary<string, object> cimPerLengthSequenceImpedancs = concreteModel.GetAllObjectsOfType("FTN.PerLengthSequenceImpedance");
+			if (cimPerLengthSequenceImpedancs != null)
 			{
-				foreach (KeyValuePair<string, object> cimLocationPair in cimLocations)
+				foreach (KeyValuePair<string, object> cimcimPerLengthSequenceImpedancPair in cimPerLengthSequenceImpedancs)
 				{
-					FTN.Location cimLocation = cimLocationPair.Value as FTN.Location;
+					FTN.PerLengthSequenceImpedance cimPerLengthSequenceImpedance = cimcimPerLengthSequenceImpedancPair.Value as FTN.PerLengthSequenceImpedance;
 
-					ResourceDescription rd = CreateLocationResourceDescription(cimLocation);
+					ResourceDescription rd = CreatePerLengthSequenceImpedanceResourceDescription(cimPerLengthSequenceImpedance);
 					if (rd != null)
 					{
 						delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
-						report.Report.Append("Location ID = ").Append(cimLocation.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+						report.Report.Append("PerLengthSequenceImpedance ID = ").Append(cimPerLengthSequenceImpedance.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
 					}
 					else
 					{
-						report.Report.Append("Location ID = ").Append(cimLocation.ID).AppendLine(" FAILED to be converted");
+						report.Report.Append("PerLengthSequenceImpedance ID = ").Append(cimPerLengthSequenceImpedance.ID).AppendLine(" FAILED to be converted");
 					}
 				}
 				report.Report.AppendLine();
 			}
 		}
 
-		private ResourceDescription CreateLocationResourceDescription(FTN.Location cimLocation)
+		private ResourceDescription CreatePerLengthSequenceImpedanceResourceDescription(FTN.PerLengthSequenceImpedance cimPerLengthSequenceImpedance)
 		{
 			ResourceDescription rd = null;
-			if (cimLocation != null)
+			if (cimPerLengthSequenceImpedance != null)
 			{
-				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.LOCATION, importHelper.CheckOutIndexForDMSType(DMSType.LOCATION));
+				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.PERLENSEQIMPEDANCE, importHelper.CheckOutIndexForDMSType(DMSType.PERLENSEQIMPEDANCE));
 				rd = new ResourceDescription(gid);
-				importHelper.DefineIDMapping(cimLocation.ID, gid);
+				importHelper.DefineIDMapping(cimPerLengthSequenceImpedance.ID, gid);
 
 				////populate ResourceDescription
-				PowerTransformerConverter.PopulateLocationProperties(cimLocation, rd);
+				PowerTransformerConverter.PopulatePerLengthSequenceImpedanceProperties(cimPerLengthSequenceImpedance, rd, importHelper, report);
 			}
 			return rd;
 		}
 
-		private void ImportPowerTransformers()
+		private void ImportPerLengthPhaseImpedance()
 		{
-			SortedDictionary<string, object> cimPowerTransformers = concreteModel.GetAllObjectsOfType("FTN.PowerTransformer");
-			if (cimPowerTransformers != null)
+			SortedDictionary<string, object> cimPerLengthPhaseImpedances = concreteModel.GetAllObjectsOfType("FTN.PerLengthPhaseImpedance");
+			if (cimPerLengthPhaseImpedances != null)
 			{
-				foreach (KeyValuePair<string, object> cimPowerTransformerPair in cimPowerTransformers)
+				foreach (KeyValuePair<string, object> cimPerLengthPhaseImpedancePair in cimPerLengthPhaseImpedances)
 				{
-					FTN.PowerTransformer cimPowerTransformer = cimPowerTransformerPair.Value as FTN.PowerTransformer;
+					FTN.PerLengthPhaseImpedance cimPerLengthPhaseImpedance = cimPerLengthPhaseImpedancePair.Value as FTN.PerLengthPhaseImpedance;
 
-					ResourceDescription rd = CreatePowerTransformerResourceDescription(cimPowerTransformer);
+					ResourceDescription rd = CreatePerLengthPhaseImpedanceResourceDescription(cimPerLengthPhaseImpedance);
 					if (rd != null)
 					{
 						delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
-						report.Report.Append("PowerTransformer ID = ").Append(cimPowerTransformer.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+						report.Report.Append("PerLengthPhaseImpedance ID = ").Append(cimPerLengthPhaseImpedance.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
 					}
 					else
 					{
-						report.Report.Append("PowerTransformer ID = ").Append(cimPowerTransformer.ID).AppendLine(" FAILED to be converted");
+						report.Report.Append("PerLengthPhaseImpedance ID = ").Append(cimPerLengthPhaseImpedance.ID).AppendLine(" FAILED to be converted");
 					}
 				}
 				report.Report.AppendLine();
 			}
 		}
 
-		private ResourceDescription CreatePowerTransformerResourceDescription(FTN.PowerTransformer cimPowerTransformer)
+		private ResourceDescription CreatePerLengthPhaseImpedanceResourceDescription(FTN.PerLengthPhaseImpedance cimPerLengthPhaseImpedance)
 		{
 			ResourceDescription rd = null;
-			if (cimPowerTransformer != null)
+			if (cimPerLengthPhaseImpedance != null)
 			{
-				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.POWERTR, importHelper.CheckOutIndexForDMSType(DMSType.POWERTR));
+				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.PHASEIMPDATA, importHelper.CheckOutIndexForDMSType(DMSType.PHASEIMPDATA));
 				rd = new ResourceDescription(gid);
-				importHelper.DefineIDMapping(cimPowerTransformer.ID, gid);
+				importHelper.DefineIDMapping(cimPerLengthPhaseImpedance.ID, gid);
 
 				////populate ResourceDescription
-				PowerTransformerConverter.PopulatePowerTransformerProperties(cimPowerTransformer, rd, importHelper, report);
+				PowerTransformerConverter.PopulatePerLengthPhaseImpedanceProperties(cimPerLengthPhaseImpedance, rd, importHelper, report);
 			}
 			return rd;
 		}
 
-		private void ImportTransformerWindings()
+		private void ImportTerminal()
 		{
-			SortedDictionary<string, object> cimTransformerWindings = concreteModel.GetAllObjectsOfType("FTN.TransformerWinding");
-			if (cimTransformerWindings != null)
+			SortedDictionary<string, object> cimTerminals = concreteModel.GetAllObjectsOfType("FTN.Terminal");
+			if (cimTerminals != null)
 			{
-				foreach (KeyValuePair<string, object> cimTransformerWindingPair in cimTransformerWindings)
+				foreach (KeyValuePair<string, object> cimTerminalPair in cimTerminals)
 				{
-					FTN.TransformerWinding cimTransformerWinding = cimTransformerWindingPair.Value as FTN.TransformerWinding;
+					FTN.Terminal cimTerminal = cimTerminalPair.Value as FTN.Terminal;
 
-					ResourceDescription rd = CreateTransformerWindingResourceDescription(cimTransformerWinding);
+					ResourceDescription rd = CreateTerminalResourceDescription(cimTerminal);
 					if (rd != null)
 					{
 						delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
-						report.Report.Append("TransformerWinding ID = ").Append(cimTransformerWinding.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+						report.Report.Append("Terminal ID = ").Append(cimTerminal.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
 					}
 					else
 					{
-						report.Report.Append("TransformerWinding ID = ").Append(cimTransformerWinding.ID).AppendLine(" FAILED to be converted");
+						report.Report.Append("Terminal ID = ").Append(cimTerminal.ID).AppendLine(" FAILED to be converted");
 					}
 				}
 				report.Report.AppendLine();
 			}
 		}
 
-		private ResourceDescription CreateTransformerWindingResourceDescription(FTN.TransformerWinding cimTransformerWinding)
+		private ResourceDescription CreateTerminalResourceDescription(FTN.Terminal cimTerminal)
 		{
 			ResourceDescription rd = null;
-			if (cimTransformerWinding != null)
+			if (cimTerminal != null)
 			{
-				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.POWERTRWINDING, importHelper.CheckOutIndexForDMSType(DMSType.POWERTRWINDING));
+				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.TERMINAL, importHelper.CheckOutIndexForDMSType(DMSType.TERMINAL));
 				rd = new ResourceDescription(gid);
-				importHelper.DefineIDMapping(cimTransformerWinding.ID, gid);
+				importHelper.DefineIDMapping(cimTerminal.ID, gid);
 
 				////populate ResourceDescription
-				PowerTransformerConverter.PopulateTransformerWindingProperties(cimTransformerWinding, rd, importHelper, report);
+				PowerTransformerConverter.PopulateTerminalProperties(cimTerminal, rd, importHelper, report);
 			}
 			return rd;
 		}
 
-        #region PHASEIMPEDANCEDATA IMPORT
-
-        private void ImportPhaseImpedanceData()
+        private void ImportACLineSegment()
         {
-            SortedDictionary<string, object> cimPhaseImpedanceDatas = concreteModel.GetAllObjectsOfType("FTN.PhaseImpedanceData");
-            if (cimPhaseImpedanceDatas != null)
+            SortedDictionary<string, object> cimACLineSegments = concreteModel.GetAllObjectsOfType("FTN.ACLineSegment");
+            if (cimACLineSegments != null)
             {
-                foreach (KeyValuePair<string, object> cimPhaseImpedanceDataPair in cimPhaseImpedanceDatas)
+                foreach (KeyValuePair<string, object> cimACLineSegmentPair in cimACLineSegments)
                 {
-                    FTN.PhaseImpedanceData cimPhaseImpedanceData = cimPhaseImpedanceDataPair.Value as FTN.PhaseImpedanceData;
+                    FTN.ACLineSegment cimACLineSegment = cimACLineSegmentPair.Value as FTN.ACLineSegment;
 
-                    ResourceDescription rd = CreatePhaseImpedanceDataResourceDescription(cimPhaseImpedanceData);
+                    ResourceDescription rd = CreateACLineSegmentResourceDescription(cimACLineSegment);
                     if (rd != null)
                     {
                         delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
-                        report.Report.Append("PhaseImpedanceData ID = ").Append(cimPhaseImpedanceData.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+                        report.Report.Append("ACLineSegment ID = ").Append(cimACLineSegment.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
                     }
                     else
                     {
-                        report.Report.Append("PhaseImpedanceData ID = ").Append(cimPhaseImpedanceData.ID).AppendLine(" FAILED to be converted");
+                        report.Report.Append("ACLineSegment ID = ").Append(cimACLineSegment.ID).AppendLine(" FAILED to be converted");
                     }
                 }
                 report.Report.AppendLine();
             }
         }
 
-
-        private ResourceDescription CreatePhaseImpedanceDataResourceDescription(FTN.PhaseImpedanceData cimPhaseImpedanceData)
+        private ResourceDescription CreateACLineSegmentResourceDescription(FTN.ACLineSegment cimACLineSegment)
         {
             ResourceDescription rd = null;
-            if (cimPhaseImpedanceData != null)
+            if (cimACLineSegment != null)
             {
-                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.PHASEIMPDATA, importHelper.CheckOutIndexForDMSType(DMSType.PHASEIMPDATA));
+                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.TERMINAL, importHelper.CheckOutIndexForDMSType(DMSType.ACLINESEG));
                 rd = new ResourceDescription(gid);
-                importHelper.DefineIDMapping(cimPhaseImpedanceData.ID, gid);
+                importHelper.DefineIDMapping(cimACLineSegment.ID, gid);
 
                 ////populate ResourceDescription
-                PowerTransformerConverter.PhaseImpedanceDataProperties(cimPhaseImpedanceData, rd, importHelper, report);
+                PowerTransformerConverter.PopulateACLineSegmentProperties(cimACLineSegment, rd, importHelper, report);
             }
             return rd;
         }
 
-        #endregion PHASEIMPEDANCEDATA IMPORT
+        private void ImportDCLineSegment()
+        {
+            SortedDictionary<string, object> cimDCLineSegments = concreteModel.GetAllObjectsOfType("FTN.DCLineSegment");
+            if (cimDCLineSegments != null)
+            {
+                foreach (KeyValuePair<string, object> cimDCLineSegmentPair in cimDCLineSegments)
+                {
+                    FTN.DCLineSegment cimDCLineSegment = cimDCLineSegmentPair.Value as FTN.DCLineSegment;
+
+                    ResourceDescription rd = CreateDCLineSegmentResourceDescription(cimDCLineSegment);
+					if (rd != null)
+					{
+						delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
+						report.Report.Append("DCLineSegment ID = ").Append(cimDCLineSegment.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+					}
+					else
+					{
+						report.Report.Append("DCLineSegment ID = ").Append(cimDCLineSegment.ID).AppendLine(" FAILED to be converted");
+					}
+                }
+                report.Report.AppendLine();
+            }
+        }
+
+        private ResourceDescription CreateDCLineSegmentResourceDescription(FTN.DCLineSegment cimDCLineSegment)
+        {
+            ResourceDescription rd = null;
+            if (cimDCLineSegment != null)
+            {
+                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.TERMINAL, importHelper.CheckOutIndexForDMSType(DMSType.ACLINESEG));
+                rd = new ResourceDescription(gid);
+                importHelper.DefineIDMapping(cimDCLineSegment.ID, gid);
+
+                ////populate ResourceDescription
+                PowerTransformerConverter.PopulateDCLineSegmentProperties(cimDCLineSegment, rd, importHelper, report);
+            }
+            return rd;
+        }
+
+        private void ImportSeriesCompensator()
+        {
+            SortedDictionary<string, object> cimSeriesCompensators = concreteModel.GetAllObjectsOfType("FTN.SeriesCompensator");
+            if (cimSeriesCompensators != null)
+            {
+                foreach (KeyValuePair<string, object> cimSeriesCompensatorPair in cimSeriesCompensators)
+                {
+                    FTN.SeriesCompensator cimSeriesCompensator = cimSeriesCompensatorPair.Value as FTN.SeriesCompensator;
+
+                    ResourceDescription rd = CreateSeriesCompensatorResourceDescription(cimSeriesCompensator);
+                    if (rd != null)
+                    {
+                        delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
+                        report.Report.Append("DCLineSegment ID = ").Append(cimSeriesCompensator.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+                    }
+                    else
+                    {
+                        report.Report.Append("DCLineSegment ID = ").Append(cimSeriesCompensator.ID).AppendLine(" FAILED to be converted");
+                    }
+                }
+                report.Report.AppendLine();
+            }
+        }
+
+        private ResourceDescription CreateSeriesCompensatorResourceDescription(FTN.SeriesCompensator cimSeriesCompensator)
+        {
+            ResourceDescription rd = null;
+            if (cimSeriesCompensator != null)
+            {
+                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.TERMINAL, importHelper.CheckOutIndexForDMSType(DMSType.ACLINESEG));
+                rd = new ResourceDescription(gid);
+                importHelper.DefineIDMapping(cimSeriesCompensator.ID, gid);
+
+                ////populate ResourceDescription
+                PowerTransformerConverter.PopulateSeriesCompensatorProperties(cimSeriesCompensator, rd, importHelper, report);
+            }
+            return rd;
+        }
 
         #endregion Import
     }

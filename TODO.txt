@@ -1,1 +1,7 @@
-Uradjen je samo PHASEIMPDATA za Adapter
+Uraditi vezbe 8
+
+Kada pravim onaj guid - wpf pravim .NET Framework 4.8
+
+App.config prekopirati iz TestClienta
+
+Staviti refrencu na TestClient i samo pozivati funkcije i namestiti da vraca text i ispisati ga na ekranu

@@ -11,6 +11,7 @@
   xml:base="http://iec.ch/TC57/CIM100" > 
   <rdf:Description rdf:about="#ACLineSegment">
     <cims:belongsToCategory rdf:resource="#Package_IES_Projects"/>
+    <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
     <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#concrete"/>
     <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
     <rdfs:comment xml:space="preserve">A wire or combination of wires, with consistent electrical characteristics, building a single electrical system, used to carry alternating current between points in the power system.
@@ -19,6 +20,7 @@ For symmetrical, transposed 3ph lines, it is sufficient to use  attributes of th
     <rdfs:subClassOf rdf:resource="#Conductor"/>
   </rdf:Description>
   <rdf:Description rdf:about="#ACLineSegment.PerLengthImpedance">
+    <cims:inverseRoleName rdf:resource="#PerLengthImpedance.ACLineSegments"/>
     <cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:0..1"/>
     <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
@@ -116,6 +118,16 @@ For symmetrical, transposed 3ph lines, it is sufficient to use  attributes of th
     <rdfs:comment xml:space="preserve">The parts of the power system that are designed to carry current or that are conductively connected through terminals.</rdfs:comment>
     <rdfs:label>ConductingEquipment</rdfs:label>
     <rdfs:subClassOf rdf:resource="#Equipment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#ConductingEquipment.Terminals">
+    <cims:inverseRoleName rdf:resource="#Terminal.ConductingEquipment"/>
+    <cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:0..n"/>
+    <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:comment xml:space="preserve">Conducting equipment have terminals that may be connected to other conducting equipment terminals via connectivity nodes or topological nodes.</rdfs:comment>
+    <rdfs:domain rdf:resource="#ConductingEquipment"/>
+    <rdfs:label>Terminals</rdfs:label>
+    <rdfs:range rdf:resource="#Terminal"/>
   </rdf:Description>
   <rdf:Description rdf:about="#Conductor">
     <cims:belongsToCategory rdf:resource="#Package_Wires"/>
@@ -225,6 +237,16 @@ For CIMXML data files in RDF syntax, the mRID is mapped to rdf:ID or rdf:about a
     <rdfs:label>PerLengthImpedance</rdfs:label>
     <rdfs:subClassOf rdf:resource="#IdentifiedObject"/>
   </rdf:Description>
+  <rdf:Description rdf:about="#PerLengthImpedance.ACLineSegments">
+    <cims:inverseRoleName rdf:resource="#ACLineSegment.PerLengthImpedance"/>
+    <cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:0..1"/>
+    <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:comment xml:space="preserve">All line segments described by this per-length impedance.</rdfs:comment>
+    <rdfs:domain rdf:resource="#PerLengthImpedance"/>
+    <rdfs:label>ACLineSegments</rdfs:label>
+    <rdfs:range rdf:resource="#ACLineSegment"/>
+  </rdf:Description>
   <rdf:Description rdf:about="#PerLengthPhaseImpedance">
     <cims:belongsToCategory rdf:resource="#Package_Wires"/>
     <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
@@ -233,6 +255,16 @@ For CIMXML data files in RDF syntax, the mRID is mapped to rdf:ID or rdf:about a
     <rdfs:comment xml:space="preserve">Impedance and admittance parameters per unit length for n-wire unbalanced lines, in matrix form.</rdfs:comment>
     <rdfs:label>PerLengthPhaseImpedance</rdfs:label>
     <rdfs:subClassOf rdf:resource="#PerLengthImpedance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#PerLengthPhaseImpedance.PhaseImpedanceData">
+    <cims:inverseRoleName rdf:resource="#PhaseImpedanceData.PhaseImpedance"/>
+    <cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:1..n"/>
+    <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:comment xml:space="preserve">All data that belong to this conductor phase impedance.</rdfs:comment>
+    <rdfs:domain rdf:resource="#PerLengthPhaseImpedance"/>
+    <rdfs:label>PhaseImpedanceData</rdfs:label>
+    <rdfs:range rdf:resource="#PhaseImpedanceData"/>
   </rdf:Description>
   <rdf:Description rdf:about="#PerLengthPhaseImpedance.conductorCount">
     <cims:dataType rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
@@ -325,6 +357,7 @@ For CIMXML data files in RDF syntax, the mRID is mapped to rdf:ID or rdf:about a
   </rdf:Description>
   <rdf:Description rdf:about="#PhaseImpedanceData">
     <cims:belongsToCategory rdf:resource="#Package_Wires"/>
+    <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
     <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#concrete"/>
     <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
     <rdfs:comment xml:space="preserve">Triplet of resistance, reactance, and susceptance matrix element values.</rdfs:comment>
@@ -332,6 +365,7 @@ For CIMXML data files in RDF syntax, the mRID is mapped to rdf:ID or rdf:about a
     <rdfs:subClassOf rdf:resource="#IdentifiedObject"/>
   </rdf:Description>
   <rdf:Description rdf:about="#PhaseImpedanceData.PhaseImpedance">
+    <cims:inverseRoleName rdf:resource="#PerLengthPhaseImpedance.PhaseImpedanceData"/>
     <cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:1"/>
     <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
@@ -459,6 +493,7 @@ For CIMXML data files in RDF syntax, the mRID is mapped to rdf:ID or rdf:about a
   </rdf:Description>
   <rdf:Description rdf:about="#Terminal">
     <cims:belongsToCategory rdf:resource="#Package_IES_Projects"/>
+    <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
     <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#concrete"/>
     <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
     <rdfs:comment xml:space="preserve">An electrical connection point to a piece of conducting equipment. Terminals are connected at physical connection points called connectivity nodes.</rdfs:comment>
@@ -466,6 +501,7 @@ For CIMXML data files in RDF syntax, the mRID is mapped to rdf:ID or rdf:about a
     <rdfs:subClassOf rdf:resource="#IdentifiedObject"/>
   </rdf:Description>
   <rdf:Description rdf:about="#Terminal.ConductingEquipment">
+    <cims:inverseRoleName rdf:resource="#ConductingEquipment.Terminals"/>
     <cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:1"/>
     <cims:stereotype rdf:resource="http://langdale.com.au/2005/UML#byreference"/>
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>

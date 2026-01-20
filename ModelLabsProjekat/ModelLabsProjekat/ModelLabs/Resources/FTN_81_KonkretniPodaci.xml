@@ -1,0 +1,189 @@
+<rdf:RDF xml:base="http://iec.ch/TC57/CIM100" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cim="http://iec.ch/TC57/2010/CIM-schema-cim15#" xmlns:ftn="http://www.ftnydro.com/CIM15/2010/extension#">
+    
+	<!--Ovo predstavlja parametre za nazdemne vodove ili kablove-->
+	<cim:PhaseImpedanceData rdf:ID="PID1">
+		<cim:PhaseImpedanceData.b>0.0000025</cim:PhaseImpedanceData.b>
+		<cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#PI_Glavni_001"/>
+		<cim:PhaseImpedanceData.r>0.125</cim:PhaseImpedanceData.r>
+		<cim:PhaseImpedanceData.sequenceNumber>1</cim:PhaseImpedanceData.sequenceNumber>
+		<cim:PhaseImpedanceData.x>0.412</cim:PhaseImpedanceData.x>
+		<cim:IdentifiedObject.aliasName>R1_X1_B1</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>550e8400-e29b-41d4-a716-446655440001</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Faza A - Impedansa deonice</cim:IdentifiedObject.name>
+	</cim:PhaseImpedanceData>
+
+	<cim:PhaseImpedanceData rdf:ID="PID2">
+		<cim:PhaseImpedanceData.b>0.0000031</cim:PhaseImpedanceData.b>
+		<cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#PI_Glavni_002"/>
+		<cim:PhaseImpedanceData.r>0.153</cim:PhaseImpedanceData.r>
+		<cim:PhaseImpedanceData.sequenceNumber>2</cim:PhaseImpedanceData.sequenceNumber>
+		<cim:PhaseImpedanceData.x>0.401</cim:PhaseImpedanceData.x>
+		<cim:IdentifiedObject.aliasName>R2_X2_B2</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>8fa1c32d-947b-4b1a-8e2c-5b6d7a8f9e01</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Faza B - Impedansa deonice</cim:IdentifiedObject.name>
+	</cim:PhaseImpedanceData>
+
+	<!--PerLengthPhase-->
+	<cim:PerLengthPhaseImpedance rdf:ID="PI_Glavni_001">
+		<cim:PerLengthPhaseImpedance.conductorCount>3</cim:PerLengthPhaseImpedance.conductorCount>
+		<cim:PerLengthImpedance.ACLineSegments rdf:resource="#_AC_LINE_VOD_002"/>
+		<cim:IdentifiedObject.aliasName>PI_Glavni_A</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>f3b2d0e1-9e44-4c2e-9a21-1000aa889001</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Per-length impedance – Glavni vod 001</cim:IdentifiedObject.name>
+	</cim:PerLengthPhaseImpedance>
+
+	<cim:PerLengthPhaseImpedance rdf:ID="PI_Glavni_002">
+		<cim:PerLengthPhaseImpedance.conductorCount>3</cim:PerLengthPhaseImpedance.conductorCount>
+		<cim:PerLengthImpedance.ACLineSegments rdf:resource="#ACLS_BGN_01"/>
+		<cim:IdentifiedObject.aliasName>PI_Glavni_B</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>c1a7b3d4-7d11-4f7c-8b31-2000bb779002</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Per-length impedance – Glavni vod 002</cim:IdentifiedObject.name>
+	</cim:PerLengthPhaseImpedance>
+
+    <!--Kataloski podataka o vodu - predstavljva vrednosti po jedinici duzine-->
+
+    <cim:PerLengthSequenceImpedance rdf:ID="PLSI_ALCE_150">
+		<cim:PerLengthSequenceImpedance.b0ch>0.0000018</cim:PerLengthSequenceImpedance.b0ch>
+		<cim:PerLengthSequenceImpedance.bch>0.0000032</cim:PerLengthSequenceImpedance.bch>
+		<cim:PerLengthSequenceImpedance.g0ch>0.0</cim:PerLengthSequenceImpedance.g0ch>
+		<cim:PerLengthSequenceImpedance.gch>0.0</cim:PerLengthSequenceImpedance.gch>
+		<cim:PerLengthSequenceImpedance.r>0.1223</cim:PerLengthSequenceImpedance.r>
+		<cim:PerLengthSequenceImpedance.r0>0.3669</cim:PerLengthSequenceImpedance.r0>
+		<cim:PerLengthSequenceImpedance.x>0.4002</cim:PerLengthSequenceImpedance.x>
+		<cim:PerLengthSequenceImpedance.x0>1.2006</cim:PerLengthSequenceImpedance.x0>
+		<cim:PerLengthImpedance.ACLineSegments rdf:resource="#ACLS_BGN_01"/>
+		<cim:IdentifiedObject.aliasName>ALCE_150_SPEC</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>d290f1ee-6c54-4b01-90e6-d701748f0851</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Specifikacija provodnika AlCe 150/25</cim:IdentifiedObject.name>
+	</cim:PerLengthSequenceImpedance>
+
+    <cim:PerLengthSequenceImpedance rdf:ID="PLSI_XHE_49_110kV">
+        <cim:PerLengthSequenceImpedance.b0ch>0.000045</cim:PerLengthSequenceImpedance.b0ch>
+        <cim:PerLengthSequenceImpedance.bch>0.000062</cim:PerLengthSequenceImpedance.bch>
+        <cim:PerLengthSequenceImpedance.g0ch>0.0</cim:PerLengthSequenceImpedance.g0ch>
+        <cim:PerLengthSequenceImpedance.gch>0.0</cim:PerLengthSequenceImpedance.gch>
+        <cim:PerLengthSequenceImpedance.r>0.0642</cim:PerLengthSequenceImpedance.r>
+        <cim:PerLengthSequenceImpedance.r0>0.1926</cim:PerLengthSequenceImpedance.r0>
+        <cim:PerLengthSequenceImpedance.x>0.1250</cim:PerLengthSequenceImpedance.x>
+        <cim:PerLengthSequenceImpedance.x0>0.3750</cim:PerLengthSequenceImpedance.x0>
+		<cim:PerLengthImpedance.ACLineSegments rdf:resource="#_AC_LINE_VOD_002"/>
+        <cim:IdentifiedObject.aliasName>XHE_49_240_SPEC</cim:IdentifiedObject.aliasName>
+        <cim:IdentifiedObject.mRID>9e3d8c1a-5b62-4f7e-a1d2-c3b4a5f6e7d8</cim:IdentifiedObject.mRID>
+        <cim:IdentifiedObject.name>Kabl XHE 49-A 1x240 mm2 110kV</cim:IdentifiedObject.name>
+    </cim:PerLengthSequenceImpedance>
+
+    <!--Redna kompenzacija u prenosnoj mrezi-->
+    <cim:SeriesCompensator rdf:ID="_SC_BATAJNICA_01">
+        <cim:SeriesCompensator.r>0.05</cim:SeriesCompensator.r>
+        <cim:SeriesCompensator.r0>0.05</cim:SeriesCompensator.r0>
+        <cim:SeriesCompensator.x>-15.42</cim:SeriesCompensator.x>
+        <cim:SeriesCompensator.x0>-15.42</cim:SeriesCompensator.x0>
+        <cim:IdentifiedObject.aliasName>RK_400_BAT</cim:IdentifiedObject.aliasName>
+        <cim:IdentifiedObject.mRID>e5d6c7b8-a912-4d3e-b456-7890abcdef12</cim:IdentifiedObject.mRID>
+        <cim:IdentifiedObject.name>Redna kompenzacija 400kV Batajnica</cim:IdentifiedObject.name>
+    </cim:SeriesCompensator>
+
+    <cim:SeriesCompensator rdf:ID="_SC_SUBOTICA_02">
+        <cim:SeriesCompensator.r>0.02</cim:SeriesCompensator.r>
+        <cim:SeriesCompensator.r0>0.02</cim:SeriesCompensator.r0>
+        <cim:SeriesCompensator.x>-8.75</cim:SeriesCompensator.x>
+        <cim:SeriesCompensator.x0>-8.75</cim:SeriesCompensator.x0>
+        <cim:IdentifiedObject.aliasName>RK_220_SUB</cim:IdentifiedObject.aliasName>
+        <cim:IdentifiedObject.mRID>c9a8b7d6-e5f4-4321-b1a2-9876543210fe</cim:IdentifiedObject.mRID>
+        <cim:IdentifiedObject.name>Redna kondenzatorska baterija 220kV Subotica</cim:IdentifiedObject.name>
+    </cim:SeriesCompensator>
+
+	<!--Primer za jednosmernu struju-->
+	<cim:DCLineSegment rdf:ID="DCLS1">
+		<cim:Conductor.length>54.2</cim:Conductor.length>
+		<cim:IdentifiedObject.aliasName>DV_BG_NS_DC1</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>f81d4fae-7dec-11d0-a765-00a0c91e6bf6</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>DC Vod Beograd - Novi Sad Deonica 2</cim:IdentifiedObject.name>
+	</cim:DCLineSegment>
+
+	<cim:DCLineSegment rdf:ID="DCLS2">
+		<cim:Conductor.length>22.5</cim:Conductor.length>
+		<cim:IdentifiedObject.aliasName>DV_BG_NS_1</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>123e4567-e89b-12d3-a456-426614174000</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>DC Vod Prenosni Sistem Sever</cim:IdentifiedObject.name>
+	</cim:DCLineSegment>
+
+	<!--ACLineSegment model deonice voda za naizmenicnu struju-->
+    <cim:ACLineSegment rdf:ID="ACLS_BGN_01">
+		<cim:ACLineSegment.b0ch>0.000021</cim:ACLineSegment.b0ch>
+		<cim:ACLineSegment.bch>0.000035</cim:ACLineSegment.bch>
+		<cim:ACLineSegment.g0ch>0.0</cim:ACLineSegment.g0ch>
+		<cim:ACLineSegment.gch>0.0</cim:ACLineSegment.gch>
+		<cim:ACLineSegment.PerLengthImpedance rdf:resource="#PI_Glavni_001"/>
+		<cim:ACLineSegment.r>1.25</cim:ACLineSegment.r>
+		<cim:ACLineSegment.r0>3.75</cim:ACLineSegment.r0>
+		<cim:ACLineSegment.x>4.10</cim:ACLineSegment.x>
+		<cim:ACLineSegment.x0>12.30</cim:ACLineSegment.x0>
+		<cim:Conductor.length>10.0</cim:Conductor.length>
+		<cim:IdentifiedObject.aliasName>DV_110_DS</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>f47ac10b-58cc-4372-a567-0e02b2c3d479</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>DV 110kV Dalekovod Sever</cim:IdentifiedObject.name>
+	</cim:ACLineSegment>
+
+    <cim:ACLineSegment rdf:ID="_AC_LINE_VOD_002">
+		<cim:ACLineSegment.b0ch>0.000048</cim:ACLineSegment.b0ch>
+		<cim:ACLineSegment.bch>0.000082</cim:ACLineSegment.bch>
+		<cim:ACLineSegment.g0ch>0.0</cim:ACLineSegment.g0ch>
+		<cim:ACLineSegment.gch>0.0</cim:ACLineSegment.gch>
+		<cim:ACLineSegment.PerLengthImpedance rdf:resource="#PI_Glavni_002"/>
+		<cim:ACLineSegment.r>3.12</cim:ACLineSegment.r>
+		<cim:ACLineSegment.r0>9.36</cim:ACLineSegment.r0>
+		<cim:ACLineSegment.x>10.45</cim:ACLineSegment.x>
+		<cim:ACLineSegment.x0>31.35</cim:ACLineSegment.x0>
+		<cim:Conductor.length>25.5</cim:Conductor.length>
+		<cim:IdentifiedObject.aliasName>DV_110_NS2_ZR</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>b3e1f2a4-d5c6-4e7f-8a9b-0123456789ab</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Dalekovod 110kV Novi Sad 2 - Zrenjanin 1</cim:IdentifiedObject.name>
+	</cim:ACLineSegment>
+
+	<!--Terminal-->
+	<cim:Terminal rdf:ID="T1">
+		<cim:Terminal.ConductingEquipment rdf:resource="#_SC_BATAJNICA_01"/>
+		<cim:IdentifiedObject.aliasName>BatT1</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>e3c9f4de-7b21-4a6a-9f5e-9f7e5c4a0011</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Terminal 1 – SC Batajnica</cim:IdentifiedObject.name>
+	</cim:Terminal>
+
+	<cim:Terminal rdf:ID="T2">
+		<cim:Terminal.ConductingEquipment rdf:resource="#_SC_SUBOTICA_02"/>
+		<cim:IdentifiedObject.aliasName>SubT2</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>2c7db8b2-3b6a-4b7e-83b1-56af00003211</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Terminal 2 - SC Subotica</cim:IdentifiedObject.name>
+	</cim:Terminal>
+
+	<cim:Terminal rdf:ID="T3">
+		<cim:Terminal.ConductingEquipment rdf:resource="#ACLS_BGN_01"/>
+		<cim:IdentifiedObject.aliasName>ACLS_BGN_T1</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>f0b7c4b1-9d33-4364-9a51-0067ab004421</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Terminal 3 - ACLineSegment Beograd</cim:IdentifiedObject.name>
+	</cim:Terminal>
+
+	<cim:Terminal rdf:ID="T4">
+		<cim:Terminal.ConductingEquipment rdf:resource="#_AC_LINE_VOD_002"/>
+		<cim:IdentifiedObject.aliasName>VOD002_T4</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>c7f1c3c0-2c91-4f3d-9f73-1100a4410044</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Terminal 4 – AC line VOD_002</cim:IdentifiedObject.name>
+	</cim:Terminal>
+
+	<cim:Terminal rdf:ID="T5">
+		<cim:Terminal.ConductingEquipment rdf:resource="#DCLS1"/>
+		<cim:IdentifiedObject.aliasName>DCLS1_T5</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>4c3b9c32-8fa1-4c2b-8a71-2200bb780055</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Terminal 5 – DCLineSegment DCLS1</cim:IdentifiedObject.name>
+	</cim:Terminal>
+
+	<cim:Terminal rdf:ID="T6">
+		<cim:Terminal.ConductingEquipment rdf:resource="#DCLS2"/>
+		<cim:IdentifiedObject.aliasName>DCLS2_T6</cim:IdentifiedObject.aliasName>
+		<cim:IdentifiedObject.mRID>b9d4ef21-6a44-4a01-9c32-3300aa670066</cim:IdentifiedObject.mRID>
+		<cim:IdentifiedObject.name>Terminal 6 – DCLineSegment DCLS2</cim:IdentifiedObject.name>
+	</cim:Terminal>
+	
+
+
+</rdf:RDF>
