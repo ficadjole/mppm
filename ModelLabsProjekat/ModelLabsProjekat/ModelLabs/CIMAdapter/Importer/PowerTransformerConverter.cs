@@ -291,19 +291,9 @@
                 {
                     Console.WriteLine("ConductorCount: " + cimPerLengthPhaseImpedance.ConductorCount);
 
-                    rd.AddProperty(new Property(ModelCode.PERLENPHASEIMP_CONDCOUNT, cimPerLengthPhaseImpedance.ConductorCount));
+                    rd.AddProperty(new Property(ModelCode.PERLENPHASEIMP_CONDCOUNT,Int32.Parse(cimPerLengthPhaseImpedance.ConductorCount.ToString())));
                 }
 
-                //if (cimPerLengthPhaseImpedanceData.PhaseImpedanceDataHasValue)
-                //{
-                //    long gid = importHelper.GetMappedGID(cimPerLengthPhaseImpedanceData.PhaseImpedanceData.ID);
-                //    if (gid < 0)
-                //    {
-                //        report.Report.Append("WARNING: Convert ").Append(cimPerLengthPhaseImpedanceData.GetType().ToString()).Append(" rdfID = \"").Append(cimPerLengthPhaseImpedanceData.ID);
-                //        report.Report.Append("\" - Failed to set reference to PhaseImpedanceData: rdfID \"").Append(cimPerLengthPhaseImpedanceData.PhaseImpedanceData.ID).AppendLine(" \" is not mapped to GID!");
-                //    }
-                //    rd.AddProperty(new Property(ModelCode.PERLENPHASEIMP_PHASEIMPDATA, gid));
-                //}
             }
         }
 

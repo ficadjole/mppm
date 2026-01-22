@@ -119,33 +119,38 @@ namespace FTN.Services.NetworkModelService
 		{
 			short type = ModelCodeHelper.ExtractTypeFromGlobalId(globalId);
 
-			IdentifiedObject io = null;			
+			IdentifiedObject io = null;
 			switch ((DMSType)type)
 			{
-				case DMSType.BASEVOLTAGE:
-					io = new BaseVoltage(globalId);
+				case DMSType.DCLINESEG:
+					io = new DCLineSegment(globalId);
 					break;
+				case DMSType.ACLINESEG:
+					io = new ACLineSegment(globalId);
+					break;
+				case DMSType.SERSOMP:
+					io = new SeriesCompensator(globalId);
+					break;
+				case DMSType.PHASEIMPDATA:
+					io = new PhaseImpedanceData(globalId);
+					break;
+				case DMSType.TERMINAL:
+					io = new Terminal(globalId);
+					break;
+                case DMSType.PERLENPHASEIMP:
+                    io = new PerLengthPhaseImpedance(globalId);
+                    break;
+                case DMSType.PERLENSEQIMPEDANCE:
+                    io = new PerLengthSequenceImpedance(globalId);
+                    break;
 
-				case DMSType.LOCATION:
-					io = new Location(globalId);
-					break;
-				case DMSType.POWERTR:
-					io = new PowerTransformer(globalId);
-					break;
-				case DMSType.POWERTRWINDING:
-					io = new TransformerWinding(globalId);
-					break;
-				case DMSType.WINDINGTEST:
-					io = new WindingTest(globalId);
-					break;			
-
-				default:					
+                default:
 					string message = String.Format("Failed to create entity because specified type ({0}) is not supported.", type);
 					CommonTrace.WriteTrace(CommonTrace.TraceError, message);
-					throw new Exception(message);					
+					throw new Exception(message);
 			}
 
-            // Add entity to map
+			// Add entity to map
 			this.AddEntity(io);
 
 			return io;

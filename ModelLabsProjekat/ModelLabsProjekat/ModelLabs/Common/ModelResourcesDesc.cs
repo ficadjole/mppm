@@ -867,12 +867,12 @@ namespace FTN.Common
 		private void InitializeTypeIdsInInsertOrder()
 		{			
 			typeIdsInInsertOrder.Add(ModelCode.DCLINESEG);
-			typeIdsInInsertOrder.Add(ModelCode.ACLINESEG);
 			typeIdsInInsertOrder.Add(ModelCode.SERSOMP);
-			typeIdsInInsertOrder.Add(ModelCode.PHASEIMPDATA);
-			typeIdsInInsertOrder.Add(ModelCode.TERMINAL);
             typeIdsInInsertOrder.Add(ModelCode.PERLENPHASEIMP);
+			typeIdsInInsertOrder.Add(ModelCode.PHASEIMPDATA);
             typeIdsInInsertOrder.Add(ModelCode.PERLENSEQIMPEDANCE);
+			typeIdsInInsertOrder.Add(ModelCode.ACLINESEG);
+			typeIdsInInsertOrder.Add(ModelCode.TERMINAL);
         }
 
 		private void InitializeNotSettablePropertyIds()

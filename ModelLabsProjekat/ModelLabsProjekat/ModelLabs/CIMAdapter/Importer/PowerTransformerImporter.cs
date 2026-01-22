@@ -92,16 +92,18 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Importer
 		{
 			LogManager.Log("Loading elements and creating delta...", LogLevel.Info);
 
-			//// import all concrete model types (DMSType enum)
+            //// import all concrete model types (DMSType enum)
+            
             ImportDCLineSegment();
             ImportSeriesCompensator();
             ImportPerLengthPhaseImpedance();
 			ImportPhaseImpedanceData();
 			ImportPerLengthSequenceImpedance();
 			ImportACLineSegment();
-			ImportTerminal();
+            ImportTerminal();
 
-			LogManager.Log("Loading elements and creating delta completed.", LogLevel.Info);
+
+            LogManager.Log("Loading elements and creating delta completed.", LogLevel.Info);
 		}
 
 		#region Import
@@ -291,7 +293,7 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Importer
             ResourceDescription rd = null;
             if (cimACLineSegment != null)
             {
-                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.TERMINAL, importHelper.CheckOutIndexForDMSType(DMSType.ACLINESEG));
+                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.ACLINESEG, importHelper.CheckOutIndexForDMSType(DMSType.ACLINESEG));
                 rd = new ResourceDescription(gid);
                 importHelper.DefineIDMapping(cimACLineSegment.ID, gid);
 
@@ -330,7 +332,7 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Importer
             ResourceDescription rd = null;
             if (cimDCLineSegment != null)
             {
-                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.TERMINAL, importHelper.CheckOutIndexForDMSType(DMSType.ACLINESEG));
+                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.DCLINESEG, importHelper.CheckOutIndexForDMSType(DMSType.DCLINESEG));
                 rd = new ResourceDescription(gid);
                 importHelper.DefineIDMapping(cimDCLineSegment.ID, gid);
 
@@ -353,11 +355,11 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Importer
                     if (rd != null)
                     {
                         delta.AddDeltaOperation(DeltaOpType.Insert, rd, true);
-                        report.Report.Append("DCLineSegment ID = ").Append(cimSeriesCompensator.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
+                        report.Report.Append("SeriesCompensator ID = ").Append(cimSeriesCompensator.ID).Append(" SUCCESSFULLY converted to GID = ").AppendLine(rd.Id.ToString());
                     }
                     else
                     {
-                        report.Report.Append("DCLineSegment ID = ").Append(cimSeriesCompensator.ID).AppendLine(" FAILED to be converted");
+                        report.Report.Append("SeriesCompensator ID = ").Append(cimSeriesCompensator.ID).AppendLine(" FAILED to be converted");
                     }
                 }
                 report.Report.AppendLine();
@@ -369,7 +371,7 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Importer
             ResourceDescription rd = null;
             if (cimSeriesCompensator != null)
             {
-                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.TERMINAL, importHelper.CheckOutIndexForDMSType(DMSType.ACLINESEG));
+                long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.SERSOMP, importHelper.CheckOutIndexForDMSType(DMSType.SERSOMP));
                 rd = new ResourceDescription(gid);
                 importHelper.DefineIDMapping(cimSeriesCompensator.ID, gid);
 

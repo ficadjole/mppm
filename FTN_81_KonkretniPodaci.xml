@@ -111,7 +111,7 @@
 		<cim:ACLineSegment.bch>0.000035</cim:ACLineSegment.bch>
 		<cim:ACLineSegment.g0ch>0.0</cim:ACLineSegment.g0ch>
 		<cim:ACLineSegment.gch>0.0</cim:ACLineSegment.gch>
-		<cim:ACLineSegment.PerLengthImpedance rdf:resource="#PI_Glavni_001"/>
+		<cim:ACLineSegment.PerLengthImpedance rdf:resource="#PLSI_ALCE_150"/>
 		<cim:ACLineSegment.r>1.25</cim:ACLineSegment.r>
 		<cim:ACLineSegment.r0>3.75</cim:ACLineSegment.r0>
 		<cim:ACLineSegment.x>4.10</cim:ACLineSegment.x>
@@ -127,7 +127,7 @@
 		<cim:ACLineSegment.bch>0.000082</cim:ACLineSegment.bch>
 		<cim:ACLineSegment.g0ch>0.0</cim:ACLineSegment.g0ch>
 		<cim:ACLineSegment.gch>0.0</cim:ACLineSegment.gch>
-		<cim:ACLineSegment.PerLengthImpedance rdf:resource="#PI_Glavni_002"/>
+		<cim:ACLineSegment.PerLengthImpedance rdf:resource="#PLSI_XHE_49_110kV"/>
 		<cim:ACLineSegment.r>3.12</cim:ACLineSegment.r>
 		<cim:ACLineSegment.r0>9.36</cim:ACLineSegment.r0>
 		<cim:ACLineSegment.x>10.45</cim:ACLineSegment.x>
