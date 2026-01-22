@@ -16,22 +16,6 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 		{
 		}
 
-
-
-        //public override bool Equals(object obj)
-        //{
-        //	if (base.Equals(obj))
-        //	{
-        //		Equipment x = (Equipment)obj;
-        //		return ((x.isUnderground == this.isUnderground) &&
-        //				(x.isPrivate == this.isPrivate));
-        //	}
-        //	else
-        //	{
-        //		return false;
-        //	}
-        //}
-
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
@@ -42,57 +26,37 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 			return base.GetHashCode();
 		}
 
-		//#region IAccess implementation
+        public override bool HasProperty(ModelCode property)
+        {
+            switch (property)
+            {
+                default:
+                    return base.HasProperty(property);
+            }
+        }
 
-		//public override bool HasProperty(ModelCode property)
-		//{
-		//	switch (property)
-		//	{
-		//		case ModelCode.EQUIPMENT_ISUNDERGROUND:
-		//		case ModelCode.EQUIPMENT_ISPRIVATE:
-		
-		//			return true;
-		//		default:
-		//			return base.HasProperty(property);
-		//	}
-		//}
+        public override void GetProperty(Property property)
+        {
+            switch (property.Id)
+            {
 
-		//public override void GetProperty(Property property)
-		//{
-		//	switch (property.Id)
-		//	{
-		//		case ModelCode.EQUIPMENT_ISUNDERGROUND:
-		//			property.SetValue(isUnderground);
-		//			break;
+                default:
+                    base.GetProperty(property);
+                    break;
+            }
+        }
+        public override void SetProperty(Property property)
+        {
+            switch (property.Id)
+            {
 
-		//		case ModelCode.EQUIPMENT_ISPRIVATE:
-		//			property.SetValue(isPrivate);
-		//			break;			
+                default:
+                    base.SetProperty(property);
+                    break;
+            }
+        }
 
-		//		default:
-		//			base.GetProperty(property);
-		//			break;
-		//	}
-		//}
 
-		//public override void SetProperty(Property property)
-		//{
-		//	switch (property.Id)
-		//	{
-		//		case ModelCode.EQUIPMENT_ISUNDERGROUND:					
-		//			isUnderground = property.AsBool();
-		//			break;
 
-		//		case ModelCode.EQUIPMENT_ISPRIVATE:
-		//			isPrivate = property.AsBool();
-		//			break;
-			
-		//		default:
-		//			base.SetProperty(property);
-		//			break;
-		//	}
-		//}		
-
-		//#endregion IAccess implementation
-	}
+    }
 }

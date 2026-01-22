@@ -430,12 +430,16 @@ namespace CIM.Model
 					////WITH TYPE MAKE AN INSTANCE
 					object instance = Activator.CreateInstance(classType);
 
-					////AND SET ID TO THAT INSTANCE
-					PropertyInfo propID = classType.GetProperty("ID");
+                    Console.WriteLine($"[Instantiate] Creating instance of {classType.Name} with ID {objID}");
+
+                    ////AND SET ID TO THAT INSTANCE
+                    PropertyInfo propID = classType.GetProperty("ID");
 					propID.SetValue(instance, objID, null);
 
-					////SET SIMPLE VALUE ATTRIBUTES
-					ProcessAttributes(assembly, element, classType, instance);
+                    Console.WriteLine($"[Instantiate] Setting ID for {classType.Name}: {objID}");
+
+                    ////SET SIMPLE VALUE ATTRIBUTES
+                    ProcessAttributes(assembly, element, classType, instance);
 
 					////SAVE OBJECT IN MODEL
                     string insertEl = concreteModel.InsertObjectInModelMap(instance, classType);
@@ -509,7 +513,8 @@ namespace CIM.Model
 							if(IsSimpleValue(prop.PropertyType))
 							{
 								SetSimpleValue(element, instance, att, prop);
-							}
+                                Console.WriteLine($"[Instantiate] Setting simple property {classType.Name}.{prop.Name} = {att.Value}");
+                            }
 							else
 							{
 								if(prop.PropertyType.IsEnum)
@@ -574,6 +579,7 @@ namespace CIM.Model
                     if (referencedObject.GetType().Equals(referencedType) || referencedObject.GetType().IsSubclassOf(referencedType))
                     {                        
                         prop.SetValue(something, referencedObject, null);
+                        Console.WriteLine($"[Connect] Setting reference {prop.DeclaringType.Name}.{prop.Name} -> ID {referencedID}");
                     }
                     else
                     {
@@ -611,7 +617,8 @@ namespace CIM.Model
 					try
 					{
 						list.Add(referencedObject);
-					}
+                        Console.WriteLine($"[Connect] Adding reference to list {prop.DeclaringType.Name}.{prop.Name} -> ID {attValue}");
+                    }
 					catch
 					{
                        

@@ -1,0 +1,59 @@
+﻿<Window
+    x:Class="NMSTestClientGUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NMSTestClientGUI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="400"
+    Height="300"
+    mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!--  ComboBox  -->
+            <RowDefinition Height="Auto" />
+            <!--  TextBox  -->
+            <RowDefinition Height="Auto" />
+            <!--  Button  -->
+            <RowDefinition Height="*" />
+            <!--  RichTextBox  -->
+        </Grid.RowDefinitions>
+
+        <!--  Dropdown lista  -->
+        <ComboBox
+            x:Name="comboBox"
+            Grid.Row="0"
+            Width="200"
+            Margin="0,0,0,10">
+            <ComboBoxItem Content="Get values" />
+            <ComboBoxItem Content="Get extent values" />
+            <ComboBoxItem Content="Get related values" />
+            <ComboBoxItem Content="Get total length of DCLineSegments" />
+            <ComboBoxItem Content="Get shortest ACLineSegment" />
+        </ComboBox>
+
+        <!--  Input polje  -->
+        <TextBox
+            x:Name="inputTextBox"
+            Grid.Row="1"
+            Width="200"
+            Margin="0,0,0,10" />
+
+        <!--  Dugme  -->
+        <Button
+            x:Name="button"
+            Grid.Row="2"
+            Width="200"
+            Margin="0,0,0,10"
+            Click="Button_Click"
+            Content="Prikazi u RichTextBox" />
+
+        <!--  RichTextBox  -->
+        <RichTextBox
+            x:Name="richTextBox"
+            Grid.Row="3"
+            VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</Window>
