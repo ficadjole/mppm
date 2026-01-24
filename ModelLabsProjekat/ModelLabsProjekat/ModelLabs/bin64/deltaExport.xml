@@ -1,0 +1,59 @@
+﻿<delta id="0">
+  <operations>
+    <operation type="insert">
+      <ResourceDescriptions count="18">
+        <ResourceDescription>
+          <id gid="0x00000001ffffffff" type="DCLINESEG" />
+          <Properties>
+            <Property id="IDOBJ_NAME" value="DC Vod Beograd - Novi Sad Deonica 2" />
+            <Property id="IDOBJ_ALIASNAME" value="DV_BG_NS_DC1" />
+            <Property id="IDOBJ_MRID" value="f81d4fae-7dec-11d0-a765-00a0c91e6bf6" />
+            <Property id="CONDUCTOR_LEN" value="54.2" />
+          </Properties>
+        </ResourceDescription>
+        <ResourceDescription>
+          <id gid="0x00000001fffffffe" type="DCLINESEG" />
+          <Properties>
+            <Property id="IDOBJ_NAME" value="DC Vod Prenosni Sistem Sever" />
+            <Property id="IDOBJ_ALIASNAME" value="DV_BG_NS_1" />
+            <Property id="IDOBJ_MRID" value="123e4567-e89b-12d3-a456-426614174000" />
+            <Property id="CONDUCTOR_LEN" value="22.5" />
+          </Properties>
+        </ResourceDescription>
+        <ResourceDescription>
+          <id gid="0x00000003ffffffff" type="SERSOMP" />
+          <Properties>
+            <Property id="IDOBJ_NAME" value="Redna kompenzacija 400kV Batajnica" />
+            <Property id="IDOBJ_ALIASNAME" value="RK_400_BAT" />
+            <Property id="IDOBJ_MRID" value="e5d6c7b8-a912-4d3e-b456-7890abcdef12" />
+            <Property id="SERSOMP_R" value="0.05" />
+            <Property id="SERSOMP_R0" value="0.05" />
+            <Property id="SERSOMP_X" value="-15.42" />
+            <Property id="SERSOMP_X0" value="-15.42" />
+          </Properties>
+        </ResourceDescription>
+        <ResourceDescription>
+          <id gid="0x00000003fffffffe" type="SERSOMP" />
+          <Properties>
+            <Property id="IDOBJ_NAME" value="Redna kondenzatorska baterija 220kV Subotica" />
+            <Property id="IDOBJ_ALIASNAME" value="RK_220_SUB" />
+            <Property id="IDOBJ_MRID" value="c9a8b7d6-e5f4-4321-b1a2-9876543210fe" />
+            <Property id="SERSOMP_R" value="0.02" />
+            <Property id="SERSOMP_R0" value="0.02" />
+            <Property id="SERSOMP_X" value="-8.75" />
+            <Property id="SERSOMP_X0" value="-8.75" />
+          </Properties>
+        </ResourceDescription>
+        <ResourceDescription>
+          <id gid="0x00000006ffffffff" type="PERLENPHASEIMP" />
+          <Properties>
+            <Property id="IDOBJ_NAME" value="Perlength impedance Glavni vod 001" />
+            <Property id="IDOBJ_ALIASNAME" value="PI_Glavni_A" />
+            <Property id="IDOBJ_MRID" value="f3b2d0e19e444c2e9a211000aa889001" />
+            <Property id="PERLENPHASEIMP_CONDCOUNT" value="" />
+          </Properties>
+        </ResourceDescription>
+      </ResourceDescriptions>
+    </operation>
+  </operations>
+</delta>

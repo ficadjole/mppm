@@ -197,8 +197,6 @@ namespace FTN.Common
 						break;
 					case PropertyType.Bool:
 					case PropertyType.Byte:
-					case PropertyType.Int32:
-					case PropertyType.Int64:
 					case PropertyType.TimeSpan:
 					case PropertyType.DateTime:
 					case PropertyType.Enum:
@@ -213,7 +211,18 @@ namespace FTN.Common
 						}
 
 						break;
-					case PropertyType.Reference:
+                    case PropertyType.Int32:
+
+                            xmlWriter.WriteValue(this.Properties[i].AsInt());
+                        
+						break;
+                    case PropertyType.Int64:
+
+                            xmlWriter.WriteValue(this.Properties[i].AsLong());
+                        
+                        break;
+
+                    case PropertyType.Reference:
 						xmlWriter.WriteValue(String.Format("0x{0:x16}", this.Properties[i].AsReference()));
 						break;
 					case PropertyType.String:
@@ -384,7 +393,236 @@ namespace FTN.Common
 			xmlWriter.WriteEndElement(); // ResourceDescription
 		}
 
-		public bool ContainsProperty(ModelCode propertyID)
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            StringBuilder vec;
+
+            sb.AppendLine("<ResourceDescription>");
+
+            sb.AppendLine("  <id>");
+            sb.AppendFormat(
+                "    gid=\"0x{0:x16}\" type=\"{1}\"",
+                this.Id,
+                ((DMSType)ModelCodeHelper.ExtractTypeFromGlobalId(this.Id)).ToString());
+            sb.AppendLine();
+            sb.AppendLine("  </id>");
+
+            sb.AppendLine("  <Properties>");
+
+            for (int i = 0; i < this.Properties.Count; i++)
+            {
+                sb.AppendFormat("    <Property id=\"{0}\" value=\"", this.Properties[i].Id);
+
+                switch (this.Properties[i].Type)
+                {
+                    case PropertyType.Float:
+                        sb.Append(this.Properties[i].AsFloat());
+                        break;
+
+                    case PropertyType.Bool:
+                        sb.Append(this.Properties[i].AsBool());
+                        break;
+
+                    case PropertyType.Byte:
+                        sb.Append(this.Properties[i].AsByte());
+                        break;
+
+                    case PropertyType.Int32:
+                        sb.Append(this.Properties[i].AsInt());
+                        break;
+
+                    case PropertyType.Int64:
+                        sb.Append(this.Properties[i].AsLong());
+                        break;
+
+                    case PropertyType.TimeSpan:
+                        sb.Append(this.Properties[i].AsTimeSpan());
+                        break;
+
+                    case PropertyType.DateTime:
+                        sb.Append(this.Properties[i].AsDateTime());
+                        break;
+
+                    case PropertyType.Enum:
+                        try
+                        {
+                            EnumDescs enumDescs = new EnumDescs();
+                            sb.Append(enumDescs.GetStringFromEnum(
+                                this.Properties[i].Id,
+                                this.Properties[i].AsEnum()));
+                        }
+                        catch
+                        {
+                            sb.Append(this.Properties[i].AsEnum());
+                        }
+                        break;
+
+                    case PropertyType.Reference:
+                        sb.AppendFormat("0x{0:x16}", this.Properties[i].AsReference());
+                        break;
+
+                    case PropertyType.String:
+                        sb.Append(this.Properties[i].PropertyValue.StringValue ?? string.Empty);
+                        break;
+
+                    case PropertyType.Int64Vector:
+                    case PropertyType.ReferenceVector:
+                        if (this.Properties[i].AsLongs().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            for (int j = 0; j < this.Properties[i].AsLongs().Count; j++)
+                            {
+                                vec.AppendFormat("0x{0:x16}", this.Properties[i].AsLongs()[j])
+                                   .Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty long/reference vector");
+                        }
+                        break;
+
+                    case PropertyType.TimeSpanVector:
+                        if (this.Properties[i].AsTimeSpans().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            for (int j = 0; j < this.Properties[i].AsTimeSpans().Count; j++)
+                            {
+                                vec.Append(this.Properties[i].AsTimeSpans()[j]).Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty timespan vector");
+                        }
+                        break;
+
+                    case PropertyType.Int32Vector:
+                        if (this.Properties[i].AsInts().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            for (int j = 0; j < this.Properties[i].AsInts().Count; j++)
+                            {
+                                vec.Append(this.Properties[i].AsInts()[j]).Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty int vector");
+                        }
+                        break;
+
+                    case PropertyType.DateTimeVector:
+                        if (this.Properties[i].AsDateTimes().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            for (int j = 0; j < this.Properties[i].AsDateTimes().Count; j++)
+                            {
+                                vec.Append(this.Properties[i].AsDateTimes()[j]).Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty DateTime vector");
+                        }
+                        break;
+
+                    case PropertyType.BoolVector:
+                        if (this.Properties[i].AsBools().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            for (int j = 0; j < this.Properties[i].AsBools().Count; j++)
+                            {
+                                vec.Append(this.Properties[i].AsBools()[j]).Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty bool vector");
+                        }
+                        break;
+
+                    case PropertyType.FloatVector:
+                        if (this.Properties[i].AsFloats().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            for (int j = 0; j < this.Properties[i].AsFloats().Count; j++)
+                            {
+                                vec.Append(this.Properties[i].AsFloats()[j]).Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty float vector");
+                        }
+                        break;
+
+                    case PropertyType.StringVector:
+                        if (this.Properties[i].AsStrings().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            for (int j = 0; j < this.Properties[i].AsStrings().Count; j++)
+                            {
+                                vec.Append(this.Properties[i].AsStrings()[j]).Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty string vector");
+                        }
+                        break;
+
+                    case PropertyType.EnumVector:
+                        if (this.Properties[i].AsEnums().Count > 0)
+                        {
+                            vec = new StringBuilder();
+                            EnumDescs enumDescs = new EnumDescs();
+
+                            for (int j = 0; j < this.Properties[i].AsEnums().Count; j++)
+                            {
+                                try
+                                {
+                                    vec.Append(enumDescs.GetStringFromEnum(
+                                        this.Properties[i].Id,
+                                        this.Properties[i].AsEnums()[j]));
+                                }
+                                catch
+                                {
+                                    vec.Append(this.Properties[i].AsEnums()[j]);
+                                }
+                                vec.Append(", ");
+                            }
+                            sb.Append(vec.ToString(0, vec.Length - 2));
+                        }
+                        else
+                        {
+                            sb.Append("empty enum vector");
+                        }
+                        break;
+
+                    default:
+                        throw new Exception("Invalid property type in ToString().");
+                }
+
+                sb.AppendLine("\" />");
+            }
+
+            sb.AppendLine("  </Properties>");
+            sb.AppendLine("</ResourceDescription>");
+
+            return sb.ToString();
+        }
+
+
+        public bool ContainsProperty(ModelCode propertyID)
 		{
 			foreach (Property property in this.Properties)
 			{
@@ -547,6 +785,8 @@ namespace FTN.Common
 				}
 				return hash;
 			}
-		}
-	}
+
+
+        }
+    }
 }

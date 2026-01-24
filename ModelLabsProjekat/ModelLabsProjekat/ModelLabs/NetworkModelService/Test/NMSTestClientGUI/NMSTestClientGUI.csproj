@@ -103,6 +103,10 @@
       <Project>{b726fb71-d295-41ee-9644-b2b0b1bc8911}</Project>
       <Name>NetworkModelGDAContract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NetworkModelService.csproj">
+      <Project>{2630d180-1b68-4e84-aeac-42ee8c88b50f}</Project>
+      <Name>NetworkModelService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NMSTestClient\NMSTestClient.csproj">
       <Project>{32ee9373-a350-42ac-972b-41b2edaba082}</Project>
       <Name>NMSTestClient</Name>

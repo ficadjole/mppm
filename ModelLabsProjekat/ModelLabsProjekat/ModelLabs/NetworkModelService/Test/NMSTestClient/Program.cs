@@ -257,6 +257,8 @@ namespace FTN.Services.NetworkModelService.TestClient
 
                 association.Type = modelCode;
 
+                Console.WriteLine("Association: " + association.PropertyId+" "+ association.Type+"\n");
+
                 return association;
             }
             catch (Exception ex)

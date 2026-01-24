@@ -215,7 +215,7 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Importer
 			ResourceDescription rd = null;
 			if (cimPerLengthPhaseImpedance != null)
 			{
-				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.PHASEIMPDATA, importHelper.CheckOutIndexForDMSType(DMSType.PHASEIMPDATA));
+				long gid = ModelCodeHelper.CreateGlobalId(0, (short)DMSType.PERLENPHASEIMP, importHelper.CheckOutIndexForDMSType(DMSType.PERLENPHASEIMP));
 				rd = new ResourceDescription(gid);
 				importHelper.DefineIDMapping(cimPerLengthPhaseImpedance.ID, gid);
 

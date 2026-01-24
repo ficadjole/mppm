@@ -1,6 +1,11 @@
-﻿using System;
+﻿using FTN.Common;
+using FTN.ServiceContracts;
+using FTN.Services.NetworkModelService;
+using FTN.Services.NetworkModelService.TestClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,8 +17,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FTN.Common;
-using FTN.ServiceContracts;
 using TelventDMS.Services.NetworkModelService.TestClient.Tests;
 
 namespace NMSTestClientGUI
@@ -29,7 +32,6 @@ namespace NMSTestClientGUI
         {
             InitializeComponent();
             testGda = new TestGda();
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -50,14 +52,15 @@ namespace NMSTestClientGUI
 
                 string odabir = selectedItem.Content.ToString();
                 string unesenGID = inputTextBox.Text;
-
+                long gid = 0;
                 switch (odabir)
                 {
                     case "Get values":
-                        if(long.TryParse(unesenGID,out long gid))
+                    gid = InputGlobalId(unesenGID);
+                        if (gid!=0)
                         {
                             var result = testGda.GetValues(gid);
-                            resultText = $"Get values result for GID {gid}:\n{result}";
+                            resultText = $"Get values result for GID {gid}:\n{result.ToString()}";
                         }
                         else
                         {
@@ -67,12 +70,12 @@ namespace NMSTestClientGUI
 
                     case "Get extent values":
 
-                        ModelCode modelCode = 0;
+                        ModelCode modelCode = InputModelCode(unesenGID);
 
-                        if (FTN.Common.ModelCodeHelper.GetModelCodeFromString(unesenGID,out modelCode))
+                        if (modelCode!=0)
                         {
                             var result = testGda.GetExtentValues(modelCode);
-                            resultText = $"Get extent values result for ModelCode {modelCode}:\n{result}";
+                            resultText = $"Get extent values result for ModelCode {modelCode}:\n{GetExtendedValuesAsString(result,testGda)}";
                         }
                         else
                         {
@@ -83,16 +86,35 @@ namespace NMSTestClientGUI
 
                     case "Get related values":
 
-                        if (long.TryParse(unesenGID, out long relatedGid))
+                        gid = InputGlobalId(unesenGID);
+                        string[] parts = associationTextBox.Text.Split(',');
+                        if (parts.Length != 2)
                         {
-                            //var result = testGda.GetRelatedValues(relatedGid);
-                            //resultText = $"Get related values result for GID {relatedGid}:\n{result}";
+                            MessageBox.Show("Association mora biti u formatu: PropertyId,Type");
+                            return;
+                        }
+
+                        string propertyIdStr = parts[0].Trim();
+                        string typeStr = parts[1].Trim();
+
+                        Association association = InputAssociation(propertyIdStr,typeStr);
+
+                        MessageBox.Show("Associtano: " + association.PropertyId + " " + association.Type);
+
+                        var relatedIds = testGda.GetRelatedValues(gid, association);
+
+                        
+                        if(relatedIds != null && relatedIds.Count > 0)
+                        {
+                            resultText = $"Get related values result for GID {gid} with association (PropertyId: {association.PropertyId}, Type: {association.Type}):\n{GetExtendedValuesAsString(relatedIds,testGda)}";
                         }
                         else
                         {
-                            resultText = "Unesite ispravan GID (broj).";
+                            resultText = $"Nema povezanih vrednosti za GID {gid} sa zadatom asocijacijom.";
                         }
+
                         break;
+                        
 
                     case "Get total length of DCLineSegments":
 
@@ -155,6 +177,148 @@ namespace NMSTestClientGUI
             }
 
             return shortestLength;
+        }
+
+        #region Helpers
+
+
+        private static long InputGlobalId(string inputGlobalId)
+        {
+
+            try
+            {
+
+                if (inputGlobalId.StartsWith("0x", StringComparison.Ordinal))
+                {
+                    inputGlobalId = inputGlobalId.Remove(0, 2);
+                    CommonTrace.WriteTrace(CommonTrace.TraceVerbose, "Entering globalId successfully ended.");
+
+                    return Convert.ToInt64(Int64.Parse(inputGlobalId, System.Globalization.NumberStyles.HexNumber));
+                }
+                else
+                {
+                    CommonTrace.WriteTrace(CommonTrace.TraceVerbose, "Entering globalId successfully ended.");
+                    return Convert.ToInt64(inputGlobalId);
+                }
+            }
+            catch (FormatException ex)
+            {
+                string message = "Entering entity id failed. Please use hex (0x) or decimal format.";
+                CommonTrace.WriteTrace(CommonTrace.TraceError, message);
+                Console.WriteLine(message);
+                throw ex;
+            }
+        }
+
+        private static ModelCode InputModelCode(string userModelCode)
+        {
+
+            try
+            {
+                ModelCode modelCode = 0;
+
+                if (!ModelCodeHelper.GetModelCodeFromString(userModelCode, out modelCode))
+                {
+                    if (userModelCode.StartsWith("0x", StringComparison.Ordinal))
+                    {
+                        modelCode = (ModelCode)long.Parse(userModelCode.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                    }
+                    else
+                    {
+                        modelCode = (ModelCode)long.Parse(userModelCode);
+                    }
+                }
+
+                return modelCode;
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("Entering Model Code failed. {0}", ex);
+                CommonTrace.WriteTrace(CommonTrace.TraceError, message);
+                Console.WriteLine(message);
+                throw ex;
+            }
+        }
+
+        private static Association InputAssociation(string userModelCode,string type)
+        {
+            Association association = new Association();
+
+            try
+            {
+                ModelCode modelCode = 0;
+
+                if (!ModelCodeHelper.GetModelCodeFromString(userModelCode, out modelCode))
+                {
+                    if (userModelCode.StartsWith("0x", StringComparison.Ordinal))
+                    {
+                        modelCode = (ModelCode)long.Parse(userModelCode.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                    }
+                    else
+                    {
+                        modelCode = (ModelCode)long.Parse(userModelCode);
+                    }
+                }
+
+                association.PropertyId = modelCode;
+
+                modelCode = 0;
+
+                if (!ModelCodeHelper.GetModelCodeFromString(type, out modelCode))
+                {
+                    if (type.StartsWith("0x", StringComparison.Ordinal))
+                    {
+                        modelCode = (ModelCode)long.Parse(type.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                    }
+                    else
+                    {
+                        modelCode = (ModelCode)long.Parse(type);
+                    }
+                }
+
+                association.Type = modelCode;
+
+                return association;
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("Entering association failed. {0}", ex);
+                CommonTrace.WriteTrace(CommonTrace.TraceError, message);
+                Console.WriteLine(message);
+                throw ex;
+            }
+        }
+
+        private static string GetExtendedValuesAsString(List<long> num,TestGda testGda)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (long n in num)
+            {
+                var result = testGda.GetValues(n);
+                sb.AppendLine(result.ToString());
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBox.SelectedItem is ComboBoxItem selectedItem)
+            {
+                string selectedText = selectedItem.Content.ToString();
+
+                if (selectedText == "Get related values")
+                {
+                    associationTextBox.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    associationTextBox.Visibility = Visibility.Collapsed;
+                }
+            }
         }
     }
 }

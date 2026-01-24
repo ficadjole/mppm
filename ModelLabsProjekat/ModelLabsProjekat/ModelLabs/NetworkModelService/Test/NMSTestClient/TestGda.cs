@@ -60,7 +60,7 @@ namespace TelventDMS.Services.NetworkModelService.TestClient.Tests
 				List<ModelCode> properties = modelResourcesDesc.GetAllPropertyIds((DMSType)type);
 
                 rd = GdaQueryProxy.GetValues(globalId, properties);
-
+                
                 xmlWriter = new XmlTextWriter(Config.Instance.ResultDirecotry + "\\GetValues_Results.xml", Encoding.Unicode);
 				xmlWriter.Formatting = Formatting.Indented;
 				rd.ExportToXml(xmlWriter);
