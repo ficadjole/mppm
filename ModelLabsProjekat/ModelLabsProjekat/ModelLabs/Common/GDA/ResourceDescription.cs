@@ -199,7 +199,18 @@ namespace FTN.Common
 					case PropertyType.Byte:
 					case PropertyType.TimeSpan:
 					case PropertyType.DateTime:
-					case PropertyType.Enum:
+					case PropertyType.Int32:
+					case PropertyType.Int64:
+                        if (this.Properties[i].Id == ModelCode.IDOBJ_GID)
+                        {
+                            xmlWriter.WriteValue(String.Format("0x{0:x16}", this.Properties[i].AsLong()));
+                        }
+                        else
+                        {
+                            xmlWriter.WriteValue(this.Properties[i].AsLong());
+                        }
+						break;
+                    case PropertyType.Enum:
 						try
 						{
 							EnumDescs enumDescs = new EnumDescs();
@@ -211,17 +222,6 @@ namespace FTN.Common
 						}
 
 						break;
-                    case PropertyType.Int32:
-
-                            xmlWriter.WriteValue(this.Properties[i].AsInt());
-                        
-						break;
-                    case PropertyType.Int64:
-
-                            xmlWriter.WriteValue(this.Properties[i].AsLong());
-                        
-                        break;
-
                     case PropertyType.Reference:
 						xmlWriter.WriteValue(String.Format("0x{0:x16}", this.Properties[i].AsReference()));
 						break;
